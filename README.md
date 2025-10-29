@@ -12,6 +12,8 @@ It allows readers to reproduce the fuzzy bootstrap estimation of copula paramete
 The provided code reproduces:
 
 Fuzzy α-cut bands (68 % and 95 %) for copula parameters
+
+
 2. Data Description
 
 Data were obtained from Yahoo Finance using the quantmod R package.
@@ -25,8 +27,13 @@ Data were retrieved on October 29, 2025.
 Daily log-returns were computed using:
 
 gold <- dailyReturn(Cl(`GC=F`))
+
 oil  <- dailyReturn(Cl(`CL=F`))
+
 data <- na.omit(cbind(gold, oil))
+
+
+
 3. Software Environment
 
 R version: 4.4.1
@@ -42,6 +49,8 @@ ggplot2, dplyr (for visualization and summary)
 Random seed for all bootstrap replications:
 
 set.seed(123)
+
+
 4. Key Functions (Code Excerpts)
 
 Only the essential functions are provided below.
@@ -49,23 +58,38 @@ Full scripts can be shared upon request to ensure file size limits and focus on 
 
 # Kendall's τ fuzzy bootstrap
 fuzzy_tau <- function(cop_fit, nboot = 100) {
+
   vals <- replicate(nboot, {
+  
     simU <- rCopula(nrow(U), cop_fit@copula)
+    
     fit_b <- fitCopula(cop_fit@copula, simU, method = "ml")
+    
     tau(fit_b@copula)
+    
   })
+  
   quantile(vals, c(0.025, 0.16, 0.84, 0.975))
 }
 
+
 # Spearman's ρ fuzzy bootstrap
 fuzzy_rho <- function(cop_fit, nboot = 100) {
+
   vals <- replicate(nboot, {
+  
     simU <- rCopula(nrow(U), cop_fit@copula)
+    
     fit_b <- fitCopula(cop_fit@copula, simU, method = "ml")
+    
     rho(fit_b@copula)
+    
   })
+  
   quantile(vals, c(0.025, 0.16, 0.84, 0.975))
 }
+
+
 5. Rolling and Estimation Rules
 
 No rolling window was applied; analysis is performed on the full 2015–2025 sample.
