@@ -2,7 +2,7 @@
 Fuzzy copulas
 Repository Purpose: To provide replication materials for the paper
 
-“Fuzzy Bootstrap Inference of Copula-Based Dependence between Gold and Oil Returns”
+“Incorporating Parameter Uncertainty into Copula Models: A Fuzzy Approach”
 submitted to Symmetry (MDPI).
 1. Overview
 
